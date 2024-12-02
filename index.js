@@ -173,14 +173,10 @@ const refineToApiUrl = repoUrl => {
 
         core.info("Starting sending messages...");
 
-        await Promise.all(channels.map(channel => {
-
-            core.info(`Sending a message`);
-
-            return sendSlack(createRequestPRData(channel));
-        }));
-
         core.info("Messages sent successfully");
+        
+        return sendSlack(createRequestPRData(channel));
+
     } catch (e) {
         core.setFailed(e.message);
     }
