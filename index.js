@@ -155,7 +155,7 @@ const refineToApiUrl = repoUrl => {
 (async () => {
     try {
         const BASE_API_URL = refineToApiUrl(core.getInput("repoUrl"));
-        const channels = new Channel();
+        const channel = new Channel();
 
         core.info(`Running for: ${BASE_API_URL}`);
 
@@ -167,14 +167,14 @@ const refineToApiUrl = repoUrl => {
             const pull = Pull.create(pullInfo);   
             core.info(`Fetching reviewers of #${pull.number}...`);
             if(pull.labels.some(({name}) => name === "[Feature]")) {
-                channels.requestReview(pull);
+                channel.requestReview(pull);
             }
         }
 
         core.info("Starting sending messages...");
 
         core.info("Messages sent successfully");
-        
+
         return sendSlack(createRequestPRData(channel));
 
     } catch (e) {
